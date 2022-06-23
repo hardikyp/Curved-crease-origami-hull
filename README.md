@@ -1,7 +1,8 @@
 # Curved crease origami for planing hulls
 
 This version of the bar and hinge model allows for simulation of curved-crease origami. 
-The modification was implemented by: Steven R. Woodruff (stevenrw@umich.edu), the base bar and hinge model was written by: Ke Liu (ke.liu@gatech.edu)   
+The modification was implemented by: Steven R. Woodruff (stevenrw@umich.edu), the base bar and hinge model was written by: Ke Liu (ke.liu@gatech.edu)
+Further modifications for handling Planing hull geometry implemented by: Hardik Patil (hardikyp@umich.edu)
 
 The following references give background and information on the bar and hinge model:
 
