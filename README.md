@@ -8,7 +8,7 @@ The following references give background and information on the bar and hinge mo
 
 ## References:
 
-1. S. R. Woodruff, E. T. Filipov (2020). A bar and hinge formulation for structural analysis of curved-crease origami. Submitted
+1. S. R. Woodruff, E. T. Filipov (2020). A bar and hinge model formulation for structural analysis of curved-crease origami. International Journal of Solids and Structures
 2. K. Liu, G. H. Paulino (2017). Nonlinear mechanics of non-rigid origami – An efficient computational approach. Royal Society Proceedings A.
 3. K. Liu, G. H. Paulino (2018). Highly efficient nonlinear structural analysis of origami assemblages using the MERLIN2 software. Origami7
 4. K. Liu, G. H. Paulino (2016). MERLIN: A MATLAB implementation to capture highly nonlinear behavior of non-rigid origami. Proceedings of IASS Annual Symposium 2016. 
