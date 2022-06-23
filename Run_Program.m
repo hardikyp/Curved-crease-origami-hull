@@ -36,7 +36,7 @@ testType = 'PlaningVariable';
 % testType = 'QuickBoatVariable';
 
 
-InputData = struct('restAngle1', 60, ...            % Prescribed folding rest dihedral angle (\phi_R) [deg] (Chine fold angle; Planing = -90, Quickboat = 90)
+InputData = struct('restAngle1', -90, ...            % Prescribed folding rest dihedral angle (\phi_R) [deg] (Chine fold angle; Planing = -90, Quickboat = 90)
     'restAngle2', 60, ...                            % Prescribed folding rest dihedral angle (\phi_R) [deg] (Keel / Deadrise angle. 180-prescribed = angle between adj faces of hull; Planing = 60, Quickboat = 60))
     'lengthStraight', 500, ...                       % Length of the straight part of the hull
     'lengthCurve', 454, ...                          % Length of the curved part of the hull
@@ -146,7 +146,7 @@ Plot_Results(InputData, PreprocessData, PostprocessData);
 % fclose(fid);
 
 %% Setup & Run POWERSEA Simulation
-%!python pwrs.py
+% !python pwrs.py
 
 % Finish timing the script
 toc
