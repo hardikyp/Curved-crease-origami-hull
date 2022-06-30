@@ -29,7 +29,8 @@ addpath('Functions');
 addpath('Geometries');
 addpath('CAD_Files');
 
-% Folding examples
+% Select Geometry
+
 % testType = 'Planing';
 testType = 'PlaningVariable';
 % testType = 'QuickBoat';
