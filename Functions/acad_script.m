@@ -89,8 +89,8 @@ fprintf(fid, "%f,0,0\n", curves{4}(end, 1));
 fprintf(fid, 'MASSPROP\n');
 fprintf(fid, '!solidboat\n\n');
 fprintf(fid, 'Yes\n');
-% fprintf(fid, '"D:\\RESEARCH\\Navy_Boat_Project\\CCO_MATLAB_Code_for_Planing_Hull\\CAD_Files\\Geom_Prop.mpr"\n');
-fprintf(fid, '"D:\\RESEARCH\\Navy_Boat_Project\\CCO_MATLAB_Code_for_Planing_Hull\\CAD_Files\\Geom_Prop_hTip_%d.mpr"\n', item);
+fprintf(fid, '"D:\\RESEARCH\\Navy_Boat_Project\\Curved-crease-origami-hull\\CAD_Files\\Geom_Prop.mpr"\n');
+
 % ERASE EVERYTHING
 fprintf(fid, 'ERASE\n');
 fprintf(fid, 'ALL\n');
@@ -134,13 +134,11 @@ fprintf(fid, "%f,0,0\n", curves{4}(end, 1));
 % SAVE AUTOCAD DWG
 fprintf(fid, 'SAVEAS\n');
 fprintf(fid, '2018\n');
-fprintf(fid, '"D:\\RESEARCH\\Navy_Boat_Project\\CCO_MATLAB_Code_for_Planing_Hull\\CAD_Files\\Planing_Hull_CCO_hTip_%d.dwg"\n', item);
-% fprintf(fid, '"D:\\RESEARCH\\Navy_Boat_Project\\CCO_MATLAB_Code_for_Planing_Hull\\CAD_Files\\Planing_Hull_CCO.dwg"\n');
+fprintf(fid, '"D:\\RESEARCH\\Navy_Boat_Project\\Curved-crease-origami-hull\\CAD_Files\\Planing_Hull_CCO.dwg"\n');
 
 % EXPORT THE GENERATED SOLID AS ACIS (.igs) FILE
 fprintf(fid, '_EXPORT\n');
-fprintf(fid, '"D:\\RESEARCH\\Navy_Boat_Project\\CCO_MATLAB_Code_for_Planing_Hull\\CAD_Files\\Planing_Hull_CCO_hTip_%d.igs"\n', item);
-% fprintf(fid, '"D:\\RESEARCH\\Navy_Boat_Project\\CCO_MATLAB_Code_for_Planing_Hull\\CAD_Files\\Planing_Hull_CCO.igs"\n');
+fprintf(fid, '"D:\\RESEARCH\\Navy_Boat_Project\\Curved-crease-origami-hull\\CAD_Files\\Planing_Hull_CCO.igs"\n');
 fprintf(fid, 'ALL\n\n');
 
 fprintf(fid, 'ATTDIA\n');

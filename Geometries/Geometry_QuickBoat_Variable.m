@@ -23,14 +23,14 @@ Nodes = zeros(No_Nodes,3);
 x_i = 7.76;
 
 for i = 1:No_Nodes
-    if i < No_Nodes_Row % upto 40
+    if i < No_Nodes_Row
         if i == 1
             x_i = 12.07;
         end
         Nodes(i,:) = [x_i h_tip 0];
         x_i = x_i + (L-12.07)/number_divisions;
     
-    elseif i >= No_Nodes_Row && i < 2*No_Nodes_Row-1 % 41 to 80
+    elseif i >= No_Nodes_Row && i < 2*No_Nodes_Row-1
         if i == No_Nodes_Row
             x_i = 7.76;
         end
@@ -42,7 +42,7 @@ for i = 1:No_Nodes
             x_i = x_i + L/number_divisions;
         end
         
-    elseif i >= 2*No_Nodes_Row-1 && i < 3*No_Nodes_Row-1 % 81 to 121
+    elseif i >= 2*No_Nodes_Row-1 && i < 3*No_Nodes_Row-1
         if i == 2*No_Nodes_Row-1
             x_i = 0;
         end
@@ -54,7 +54,7 @@ for i = 1:No_Nodes
             x_i = x_i + L/number_divisions;
         end
     
-    elseif i >= 3*No_Nodes_Row-1 && i < 4*No_Nodes_Row-2 % 122 to 161
+    elseif i >= 3*No_Nodes_Row-1 && i < 4*No_Nodes_Row-2
         if i == 3*No_Nodes_Row-1
             x_i = 7.76;
         end
@@ -67,7 +67,7 @@ for i = 1:No_Nodes
             x_i = x_i + L/number_divisions;
         end
 
-    elseif i >= 4*No_Nodes_Row-2 % 162 onwards
+    elseif i >= 4*No_Nodes_Row-2
         if i == 4*No_Nodes_Row-2
             x_i = 12.07;
         end
@@ -88,6 +88,7 @@ for i = 1:size(edge,1)
 end
 
 Supports = [2*No_Nodes_Row-1 1 1 1;
+            2*No_Nodes_Row+9 1 1 1;
             edge];
 
 Loads = [No_Nodes_Row+1+(number_divisions/2) 0 0 0;

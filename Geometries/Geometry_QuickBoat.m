@@ -67,6 +67,7 @@ for i = 1:size(edge,1)
 end
 
 Supports = [2*No_Nodes_Row-1 1 1 1;
+            2*No_Nodes_Row+9 1 1 1;
             edge];
 
 Loads = [No_Nodes_Row+1+(number_divisions/2) 0 0 0;

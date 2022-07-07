@@ -28,16 +28,16 @@ tic
 addpath('Functions');
 addpath('Geometries');
 addpath('CAD_Files');
+addpath('POWERSEA');
 
 % Select Geometry
-
 % testType = 'Planing';
 testType = 'PlaningVariable';
 % testType = 'QuickBoat';
 % testType = 'QuickBoatVariable';
 
 
-InputData = struct('restAngle1', 30, ...            % Prescribed folding rest dihedral angle (\phi_R) [deg] (Chine fold angle; Planing = -90, Quickboat = 30)
+InputData = struct('restAngle1', -90, ...            % Prescribed folding rest dihedral angle (\phi_R) [deg] (Chine fold angle; Planing = -90, Quickboat = 30)
     'restAngle2', 60, ...                            % Prescribed folding rest dihedral angle (\phi_R) [deg] (Keel / Deadrise angle. 180-prescribed = angle between adj faces of hull; Planing = 60, Quickboat = 60))
     'lengthStraight', 500, ...                       % Length of the straight part of the hull
     'lengthCurve', 454, ...                          % Length of the curved part of the hull
@@ -121,58 +121,58 @@ Plot_Results(InputData, PreprocessData, PostprocessData);
 
 %% Generate 3D Geometry File using AutoCAD
 % Organise points according to the edges of the hull
-% if strcmp(InputData.testType,'Planing') || strcmp(InputData.testType,'PlaningVariable') 
-%     curves = cell(1,10);
-%     curves{3} = PostprocessData.deformedNodes{end}([InputData.numberDivisions+2:2*InputData.numberDivisions+1 3*InputData.numberDivisions+2],:);
-%     curves{2} = PostprocessData.deformedNodes{end}(2*InputData.numberDivisions+2:3*InputData.numberDivisions+2,:);
-%     curves{1} = PostprocessData.deformedNodes{end}([3*InputData.numberDivisions+3:4*InputData.numberDivisions+2 3*InputData.numberDivisions+2],:);
-%     curves{4} = curves{1};
-%     curves{4}(:,2) = curves{1}(end,2);
-%     curves{5} = curves{3};
-%     curves{5}(:,2) = curves{3}(end,2);
-%     curves{6} = [curves{2}(1,:);curves{1}(1,:)];
-%     curves{7} = [curves{2}(1,:);curves{3}(1,:)];
-%     curves{8} = [curves{1}(1,:);curves{4}(1,:)];
-%     curves{9} = [curves{3}(1,:);curves{5}(1,:)];
-%     curves{10} = [curves{4}(1,:);curves{5}(1,:)];
-% elseif strcmp(InputData.testType,'QuickBoat') || strcmp(InputData.testType,'QuickBoatVariable')
-%     curves = cell(1,10);
-%     curves{3} = PostprocessData.deformedNodes{end}([InputData.numberDivisions+2:2*InputData.numberDivisions+1 3*InputData.numberDivisions+2],:);
-%     curves{2} = PostprocessData.deformedNodes{end}(2*InputData.numberDivisions+2:3*InputData.numberDivisions+2,:);
-%     curves{1} = PostprocessData.deformedNodes{end}([3*InputData.numberDivisions+3:4*InputData.numberDivisions+2 3*InputData.numberDivisions+2],:);
-%     curves{4} = curves{1};
-%     curves{4}(:,2) = curves{1}(end,2);
-%     curves{5} = curves{3};
-%     curves{5}(:,2) = curves{3}(end,2);
-%     curves{6} = [curves{2}(1,:);curves{1}(1,:)];
-%     curves{7} = [curves{2}(1,:);curves{3}(1,:)];
-%     curves{8} = [curves{1}(1,:);curves{4}(1,:)];
-%     curves{9} = [curves{3}(1,:);curves{5}(1,:)];
-%     curves{10} = [curves{4}(1,:);curves{5}(1,:)];
-% end
+if strcmp(InputData.testType,'Planing') || strcmp(InputData.testType,'PlaningVariable') 
+    curves = cell(1,10);
+    curves{3} = PostprocessData.deformedNodes{end}([InputData.numberDivisions+2:2*InputData.numberDivisions+1 3*InputData.numberDivisions+2],:);
+    curves{2} = PostprocessData.deformedNodes{end}(2*InputData.numberDivisions+2:3*InputData.numberDivisions+2,:);
+    curves{1} = PostprocessData.deformedNodes{end}([3*InputData.numberDivisions+3:4*InputData.numberDivisions+2 3*InputData.numberDivisions+2],:);
+    curves{4} = curves{1};
+    curves{4}(:,2) = curves{1}(end,2);
+    curves{5} = curves{3};
+    curves{5}(:,2) = curves{3}(end,2);
+    curves{6} = [curves{2}(1,:);curves{1}(1,:)];
+    curves{7} = [curves{2}(1,:);curves{3}(1,:)];
+    curves{8} = [curves{1}(1,:);curves{4}(1,:)];
+    curves{9} = [curves{3}(1,:);curves{5}(1,:)];
+    curves{10} = [curves{4}(1,:);curves{5}(1,:)];
+elseif strcmp(InputData.testType,'QuickBoat') || strcmp(InputData.testType,'QuickBoatVariable')
+    curves = cell(1,10);
+    curves{3} = PostprocessData.deformedNodes{end}([InputData.numberDivisions + 1 : 2 * InputData.numberDivisions 3 * InputData.numberDivisions + 1], :); % Chine 1
+    curves{2} = PostprocessData.deformedNodes{end}(2 * InputData.numberDivisions + 1 : 3 * InputData.numberDivisions + 1, :); % Keel
+    curves{1} = PostprocessData.deformedNodes{end}([3 * InputData.numberDivisions + 2 : 4 * InputData.numberDivisions + 1 3 * InputData.numberDivisions + 1],:); % Chine 2
+    curves{4} = PostprocessData.deformedNodes{end}([4 * InputData.numberDivisions + 2 : 5 * InputData.numberDivisions + 1 3 * InputData.numberDivisions + 1], :); % Side edge 2
+    curves{5} = PostprocessData.deformedNodes{end}([1:InputData.numberDivisions 3 * InputData.numberDivisions + 1], :); % Side edge 1
+    curves{6} = [curves{2}(1,:);curves{1}(1,:)];
+    curves{7} = [curves{2}(1,:);curves{3}(1,:)];
+    curves{8} = [curves{1}(1,:);curves{4}(1,:)];
+    curves{9} = [curves{3}(1,:);curves{5}(1,:)];
+    curves{10} = [curves{4}(1,:);curves{5}(1,:)];
+end
 
 % Write AutoCAD script file
-% run('acad_script.m');
+run('acad_script.m');
 
 % Open AUTOCAD CoreConsole and run script for creating a 3D solid
-% !"C:\Program Files\Autodesk\AutoCAD 2022\accoreconsole.exe" /i "D:\RESEARCH\Navy_Boat_Project\CCO_MATLAB_Code_for_Planing_Hull\CAD_Files\Drawing1.dwg" /s "D:\RESEARCH\Navy_Boat_Project\CCO_MATLAB_Code_for_Planing_Hull\CAD_Files\Planing_Hull_CAD_Script.scr"
+!"C:\Program Files\Autodesk\AutoCAD 2023\accoreconsole.exe" /i "D:\RESEARCH\Navy_Boat_Project\Curved-crease-origami-hull\CAD_Files\Drawing1.dwg" /s "D:\RESEARCH\Navy_Boat_Project\Curved-crease-origami-hull\CAD_Files\Planing_Hull_CAD_Script.scr"
+pause(5);
+% system('del CAD_Files\\Planing_Hull_CAD_Script.scr');
 
 % Add aft perpendicular value to geom_prop file
-% filepath = sprintf("CAD_Files/Geom_Prop_hTip_%d.mpr", item);
-% fid = fopen(filepath, 'a');
-% fprintf(fid, 'aftPerp: %f\n', curves{1}(end, 1) - curves{1}(1, 1));
-% fprintf(fid, 'hullLength: %f\n', curves{1}(end, 1));
-% fclose(fid);
+filepath = sprintf("CAD_Files/Geom_Prop.mpr");
+fid = fopen(filepath, 'a');
+fprintf(fid, 'aftPerp: %f\n', curves{1}(end, 1) - curves{1}(1, 1));
+fprintf(fid, 'hullLength: %f\n', curves{1}(end, 1));
+fclose(fid);
 
-%% Setup & Run POWERSEA Simulation
+%% Setup & Run POWERSEA Simulation (In development)
 % !python pwrs.py
 
 %% Sheet Bending Analysis
-if strcmp(InputData.testType,'Planing') || strcmp(InputData.testType,'PlaningVariable') 
-    run("SheetBendingAnalysis_Planing.m");
-elseif strcmp(InputData.testType,'QuickBoat') || strcmp(InputData.testType,'QuickBoatVariable') 
-    run("SheetBendingAnalysis_QuickBoat.m");
-end
+% if strcmp(InputData.testType,'Planing') || strcmp(InputData.testType,'PlaningVariable') 
+%     run("SheetBendingAnalysis_Planing.m");
+% elseif strcmp(InputData.testType,'QuickBoat') || strcmp(InputData.testType,'QuickBoatVariable') 
+%     run("SheetBendingAnalysis_QuickBoat.m");
+% end
 
 % Finish timing the script
 toc
