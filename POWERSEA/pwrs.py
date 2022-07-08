@@ -14,7 +14,7 @@ from pywinauto.application import Application
 ######      READ GEOMETRY DATA FROM FILE      #####
 ###################################################
 print('Reading geometry data from file...')
-geom_prop_path = "CAD_Files\\Geom_Prop.mpr"
+geom_prop_path = "D:\\RESEARCH\\Navy_Boat_Project\\Curved-crease-origami-hull\\CAD_Files\\Geom_Prop.mpr"
 with open(geom_prop_path) as geom_file:
         line = geom_file.readline()
         while line:
@@ -37,8 +37,8 @@ with open(geom_prop_path) as geom_file:
                 hull_length = '%.5f' % (float(num.group())/1000)
             line = geom_file.readline()
 
-print('Setting up powersea simulation...')
-speed = np.arange(0.75,9.5,0.25) * 1.01
+print('Setting up POWERSEA simulation for calm water...')
+input_speed = '5.05' # m/s
 
 ###################################################
 #####           APPLICATION STARTUP           #####
@@ -67,7 +67,7 @@ file_name = import_geometry_data.child_window(title="File name:", auto_id="1152"
 open_geometry = import_geometry_data.child_window(title="Open", auto_id="1", control_type="Button")
 # File name (path) -> File type (select igs from dropdown) -> open geometry
 file_name.click_input()
-geom_path = '"D:\\RESEARCH\\Navy_Boat_Project\\Powersea Analyses\\Parametric Analysis\\Parameter Sweep\\Length of Straight Part\\L' + len_st + '\\Planing_Hull_CCO_L' + len_st + '.igs"'
+geom_path = '"D:\\RESEARCH\\Navy_Boat_Project\\Curved-crease-origami-hull\\CAD_Files\\Planing_Hull_CCO.igs"'
 import_geometry_data.type_keys(geom_path, with_spaces=True)
 open_geometry.click_input()
 
@@ -129,7 +129,6 @@ boat_menu.click_input()
 vess_coefficients.click_input()
 vessel_coeff_window = pwrs.child_window(title="Vessel Coefficients", control_type="Window")
 vessel_coeff_window.type_keys('{TAB 3}')
-input_speed = np.array2string(speed[0])
 vessel_coeff_window.type_keys(input_speed)
 vessel_coeff_window.type_keys('{TAB}')
 vessel_coeff_window.child_window(title="pwrs", control_type="Window").child_window(title="OK", auto_id="2", control_type="Button").click_input()
@@ -202,7 +201,6 @@ propulsion_conditions_window.child_window(title="OK", auto_id="1", control_type=
 ###################################################
 #####        SET SIMULATION CONTROLS          #####
 ###################################################
-
 # OPEN RUN CONTROL
 pwrs.type_keys('{F4}')
 run_control_window = pwrs.child_window(title="Run Control", control_type="Window")
@@ -221,13 +219,13 @@ pwrs.type_keys('{F5}')
 status_message = pwrs.child_window(auto_id="59393", control_type="StatusBar").Static2.window_text()
 status = status_message == 'POWERSEA: Ready'
 if not status:
-    print('Running simulation ' + 'for speed = ' + input_speed)
+    print('Simulating calm water motion for planing speed =', input_speed, 'm/s')
 while (not status):
     status_message = pwrs.child_window(auto_id="59393", control_type="StatusBar").Static2.window_text()
     status = status_message == 'POWERSEA: Ready'
 end_time = time.time()
-print('Elapsed time: ', (end_time - start_time), 'sec')
-print('Simulation complete! ' + '(1/' + str(len(speed)) +')')
+print('Elapsed time:', (end_time - start_time), 'sec')
+print('Calm water simulation complete!')
 
 ###################################################
 #####             EXPORT SIM DATA             #####
@@ -251,6 +249,105 @@ save_results_window.child_window(title="OK", auto_id="1", control_type="Button")
 
 # SET PATH AND FILE NAME
 save_output_window = pwrs.child_window(title="Save 'Output' Data", control_type="Window")
-output_path = '"D:\\RESEARCH\\Navy_Boat_Project\\Powersea Analyses\\Parametric Analysis\\Parameter Sweep\\Length of Straight Part\\L' + len_st + '\\Data\\Calm_speed_' + input_speed + '.txt"'
+output_path = '"D:\\RESEARCH\\Navy_Boat_Project\\Curved-crease-origami-hull\\POWERSEA\\Data\\Calm_speed_' + input_speed + '.txt"'
 save_output_window.type_keys(output_path, with_spaces=True)
 save_output_window.child_window(title="Save", auto_id="1", control_type="Button").click_input()
+
+##################################################
+####       RUN LOOP FOR VARYING WAVES        #####
+##################################################
+
+print('Setting up wavy simulations...')
+input_wavelength = str(2 * float(hull_length))
+
+# CHANGE SPEED IN VESSEL COEFFICIENTS
+boat_menu.click_input()
+vess_coefficients.click_input()
+vessel_coeff_window = pwrs.child_window(title="Vessel Coefficients", control_type="Window")
+vessel_coeff_window.type_keys('{TAB 3}')
+vessel_coeff_window.type_keys(input_speed)
+vessel_coeff_window.type_keys('{TAB}')
+vessel_coeff_window.child_window(title="Calculate Residual Forces", auto_id="1334", control_type="RadioButton").click_input()
+vessel_coeff_window.child_window(title="Automatic", auto_id="1452", control_type="RadioButton").click_input()
+vessel_coeff_window.child_window(title="OK", auto_id="1", control_type="Button").click_input()
+
+# CHANGE SPEED IN INITIAL CONDITIONS
+conditions_menu.click_input()
+initial_conditions.click_input()
+initial_conditions_window = pwrs.child_window(title="Initial Conditions", control_type="Window")
+initial_conditions_window.type_keys('{TAB 5}')
+initial_conditions_window.type_keys(input_speed)
+initial_conditions_window.type_keys('{TAB}')
+initial_conditions_window.type_keys('0')
+initial_conditions_window.child_window(title="OK", auto_id="1", control_type="Button").click_input()
+
+# CHANGE SPEED IN PROPULSION CONDITIONS
+conditions_menu.click_input()
+propulsion_conditions.click_input()
+propulsion_conditions_window = pwrs.child_window(title="Thrust/Propulsion Conditions", control_type="Window")
+propulsion_conditions_window.child_window(title="Constant:", auto_id="1228", control_type="RadioButton").click_input()
+propulsion_conditions_window.type_keys('{TAB}')
+propulsion_conditions_window.type_keys(input_speed)
+propulsion_conditions_window.child_window(title="OK", auto_id="1", control_type="Button").click_input()
+
+# INCIDENT WAVES
+conditions_menu.click_input()
+incident_waves.click_input()
+incident_waves_window = pwrs.child_window(title="Incident Waves", control_type="Window")
+incident_waves_window.type_keys('{TAB 4}{DOWN 3}{TAB}0.02{TAB}')
+incident_waves_window.type_keys(input_wavelength)
+incident_waves_window.child_window(title="OK", auto_id="1", control_type="Button").click_input()
+
+# RUN SIMULATION
+start_time = time.time()    
+pwrs.type_keys('{F5}')
+pwrs.child_window(title="pwrs", control_type="Window").type_keys('{ENTER}')
+pwrs.child_window(title="pwrs", control_type="Window").type_keys('{ENTER}')
+status_message = pwrs.child_window(auto_id="59393", control_type="StatusBar").Static2.window_text()
+status = status_message == 'POWERSEA: Ready'
+if not status:
+    print('Running simulation for wavelength = ', input_wavelength, ', planing speed = ', input_speed, 'm/s')
+while (not status):
+    status_message = pwrs.child_window(auto_id="59393", control_type="StatusBar").Static2.window_text()
+    status = status_message == 'POWERSEA: Ready'
+end_time = time.time()
+print('Elapsed time:', (end_time - start_time), 'sec')
+print('Simulation complete!')
+
+# SAVE DATA
+results_menu.click_input()
+save_data.click_input()
+save_results_window = pwrs.child_window(title="Save Simulation Results", control_type="Window")
+
+# CLEAR DATA AND SELECT NEW PARAMTERS TO SAVE
+save_results_window.child_window(title="Remove All", auto_id="1119", control_type="Button").click_input()
+save_results_window.type_keys('{TAB 5}')
+save_results_window.type_keys(LCG)
+save_results_window.type_keys('{TAB}')
+save_results_window.type_keys(VCG)
+save_results_window.type_keys('{TAB}{SPACE}{DOWN 3}{SPACE}{DOWN}{SPACE}{DOWN}{SPACE}{DOWN}{SPACE}{DOWN}{SPACE}{DOWN 8}{SPACE}{DOWN}{SPACE}{DOWN}{SPACE}{DOWN 2}{SPACE}{DOWN 4}{SPACE}')
+save_results_window.child_window(title="Add", auto_id="1114", control_type="Button").click_input()
+
+# SET FORMAT OF DATA
+save_results_window.child_window(title="Format", auto_id="1201", control_type="Button").click_input()
+save_results_window.child_window(title="Report Format", control_type="Window").child_window(title="Comma", auto_id="1112", control_type="RadioButton").click_input()
+save_results_window.child_window(title="Report Format", control_type="Window").child_window(title="OK", auto_id="1", control_type="Button").click_input()
+save_results_window.child_window(title="OK", auto_id="1", control_type="Button").click_input()
+
+# SET PATH AND FILE NAME
+save_output_window = pwrs.child_window(title="Save 'Output' Data", control_type="Window")
+output_path = '"D:\\RESEARCH\\Navy_Boat_Project\\Curved-crease-origami-hull\\POWERSEA\\Data\\Wavy_Speed_' + input_speed + '_wavelength_' + input_wavelength + '.txt"'
+save_output_window.type_keys(output_path, with_spaces=True)
+save_output_window.child_window(title="Save", auto_id="1", control_type="Button").click_input()
+
+###################################################
+#####            CLOSING SEQUENCE             #####
+###################################################
+pwrs.type_keys('%{F4}')
+pwrs.child_window(title="pwrs", control_type="Window").child_window(title="Yes", auto_id="6", control_type="Button").click_input()
+save_path = '"D:\\RESEARCH\\Navy_Boat_Project\\Curved-crease-origami-hull\\POWERSEA\\POWERSEA1.pws"'
+pwrs.child_window(title="Save As", control_type="Window").type_keys(save_path, with_spaces=True)
+pwrs.child_window(title="Save As", control_type="Window").type_keys('{ENTER}')
+time.sleep(3)
+
+print('ALL SIMULATIONS COMPLETE! :)')

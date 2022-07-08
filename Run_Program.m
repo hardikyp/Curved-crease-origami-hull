@@ -165,7 +165,7 @@ fprintf(fid, 'hullLength: %f\n', curves{1}(end, 1));
 fclose(fid);
 
 %% Setup & Run POWERSEA Simulation (In development)
-% !python pwrs.py
+!python POWERSEA\pwrs.py
 
 %% Sheet Bending Analysis
 % if strcmp(InputData.testType,'Planing') || strcmp(InputData.testType,'PlaningVariable') 
