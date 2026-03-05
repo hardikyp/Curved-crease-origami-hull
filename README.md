@@ -1,9 +1,6 @@
 # Rapidly deployable hulls and on-demand tunable hydrodynamics with shape morphing curved crease origami
 
-## Authors
-- Hardik Y. Patil (hardikyp@umich.edu)
-- Kevin J. Maki (kjmaki@umich.edu)
-- Evgueni T. Filipov (filipov@umich.edu)
+**Authors**: Hardik Y. Patil (hardikyp@umich.edu), Kevin J. Maki (kjmaki@umich.edu) and Evgueni T. Filipov (filipov@umich.edu)
 
 This codebase contains:
 - the bar-and-hinge formulation for simulating folding of curved-crease origami-inspired hulls;
