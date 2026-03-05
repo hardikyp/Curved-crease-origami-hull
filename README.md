@@ -1,6 +1,12 @@
-# Curved-crease-origami inspired planing hulls (high-speed boats)
+# Rapidly deployable hulls and on-demand tunable hydrodynamics with shape morphing curved crease origami
+
+## Authors
+- Hardik Y. Patil (hardikyp@umich.edu)
+- Kevin J. Maki (kjmaki@umich.edu)
+- Evgueni T. Filipov (filipov@umich.edu)
+
 This codebase contains:
-- the bar-and-hinge formulation for simulating folding of curved-crease origami inspired hulls;
+- the bar-and-hinge formulation for simulating folding of curved-crease origami-inspired hulls;
 - automation scripts for the generation of CAD geometry from origami folding simulations; and
 - scripts to set up reduced-order hydrodynamic simulations of origami hulls in POWERSEA.
 
@@ -11,9 +17,11 @@ This codebase contains:
 If you publish results that leverage this codebase or the findings from our paper, please cite the original research article.
 > Patil, H. Y., Maki, K. J., & Filipov, E. T. (2024). Rapidly deployable hulls and on-demand tunable hydrodynamics with shape morphing curved crease origami. Journal of Fluids and Structures, 130, 104176. [https://doi.org/10.1016/j.jfluidstructs.2024.104176](https://doi.org/10.1016/j.jfluidstructs.2024.104176)
 
+## PDF
+[Read the submitted manuscript here](2024-JLFS-Patil-et-al-open-access).
+
 ## Acknowledgement
 The bar and hinge formulation in this codebase is modified from Woodruff and Filipov (2020) to simulate origami-inspired ship hull geometries and to perform shape matching by optimizing geometric parameters. Please refer to the paper below for details about the bar and hinge model formulation for curved-crease origami:
 > S. R. Woodruff, E. T. Filipov (2020). A bar and hinge model formulation for structural analysis of curved-crease origami. International Journal of Solids and Structures
 
-
-We would like to acknowledge the prior work from Ke Liu and Glaucio H. Paulino for straight crease origami which paved the way for the development of this code.
+We would also like to acknowledge the prior work from Ke Liu and Glaucio H. Paulino for straight crease origami, which paved the way for the development of this code.
