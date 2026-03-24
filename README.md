@@ -15,7 +15,7 @@ If you publish results that leverage this codebase or the findings from our pape
 > Patil, H. Y., Maki, K. J., & Filipov, E. T. (2024). Rapidly deployable hulls and on-demand tunable hydrodynamics with shape morphing curved crease origami. Journal of Fluids and Structures, 130, 104176. [https://doi.org/10.1016/j.jfluidstructs.2024.104176](https://doi.org/10.1016/j.jfluidstructs.2024.104176)
 
 ## PDF
-[Read the submitted manuscript here](2024-JLFS-Patil-et-al-open-access).
+[Read the manuscript here](2024-JLFS-Patil-et-al-open-access.pdf).
 
 ## Acknowledgement
 The bar and hinge formulation in this codebase is modified from Woodruff and Filipov (2020) to simulate origami-inspired ship hull geometries and to perform shape matching by optimizing geometric parameters. Please refer to the paper below for details about the bar and hinge model formulation for curved-crease origami:
